@@ -8,9 +8,9 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    VueRouter(),
     vue(),
-    vueDevTools(),
-    VueRouter()
+    vueDevTools()
   ],
   resolve: {
     alias: {
