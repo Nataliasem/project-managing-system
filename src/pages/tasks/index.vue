@@ -32,39 +32,29 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
   },
   {
     accessorKey: 'status',
-    header: () => h('div', { class: 'text-left' }, 'Status'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('status'))
-    }
+    header: () => h('div', { class: 'text-left' }, 'Status')
   },
   {
     accessorKey: 'due_date',
-    header: () => h('div', { class: 'text-left' }, 'Due Date'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('due_date'))
-    }
+    header: () => h('div', { class: 'text-left' }, 'Due Date')
   },
   {
     accessorKey: 'project_id',
-    header: () => h('div', { class: 'text-left' }, 'Project'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('project_id'))
-    }
+    header: () => h('div', { class: 'text-left' }, 'Project')
   },
   {
     accessorKey: 'collaborators',
-    header: () => h('div', { class: 'text-left' }, 'Collaborators'),
-    cell: ({ row }) => {
-      return h(
-        'div',
-        { class: 'text-left font-medium' },
-        JSON.stringify(row.getValue('collaborators'))
-      )
-    }
+    header: () => h('div', { class: 'text-left' }, 'Collaborators')
   }
 ]
 </script>
 
 <template>
-  <DataTable v-if="tasks" :columns="columns" :data="tasks" />
+  <DataTable v-if="tasks" :columns="columns" :data="tasks">
+    <template #cell-name="{ cell }">
+      <RouterLink :to="`/tasks/${cell.row.original.id}`">
+        {{ cell.getValue() }}
+      </RouterLink>
+    </template>
+  </DataTable>
 </template>
