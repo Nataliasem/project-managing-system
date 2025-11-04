@@ -3,7 +3,7 @@ import { ref, h } from 'vue'
 import { supabase } from '@/database/supabaseClient'
 import type { Tables } from '../../../database/types'
 import type { ColumnDef } from '@tanstack/vue-table'
-import DataTable from '@/components/ui/table/data-table/DataTable.vue'
+import DataTable from '@/components/ui/data-table/DataTable.vue'
 
 const tasks = ref<Tables<'tasks'>[] | null>(null)
 
