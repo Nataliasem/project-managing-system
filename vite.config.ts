@@ -9,7 +9,13 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [
     VueRouter(),
-    Vue(),
+    Vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (element) => element.startsWith('iconify-icon')
+        }
+      }
+    }),
     VueDevTools(),
     Tailwindcss()
   ],
