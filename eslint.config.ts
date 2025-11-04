@@ -14,7 +14,7 @@ export default defineConfigWithVueTs(
     files: ['**/*.{ts,mts,tsx,vue}'],
     rules: {
       'vue/multi-word-component-names': [1, {
-        "ignores": ["index", "[id]"]
+        "ignores": ["index", "[id]", "Sidebar"]
       }],
     },
   },
