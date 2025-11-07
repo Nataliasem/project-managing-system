@@ -1,32 +1,60 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { supabase } from '@/database/supabaseClient'
-import type { Tables } from '../../../database.types'
+import { h, ref } from 'vue'
+import type { Tables } from '../../../database/types'
+import type { ColumnDef } from '@tanstack/vue-table'
+import DataTable from '@/components/ui/data-table/DataTable.vue'
+import { RouterLink } from 'vue-router'
 
-const tasks = ref<Tables<'tasks'>[] | null>([])
-
+const tasks = ref<Tables<'tasks'>[] | null>(null)
 ;(async () => {
   const { data, error } = await supabase.from('tasks').select()
-  if (error) {
-    console.error(error)
-  }
-  tasks.value = data
 
-  console.log(tasks)
+  if (error) console.log(error)
+
+  tasks.value = data
 })()
+
+const columns: ColumnDef<Tables<'tasks'>>[] = [
+  {
+    accessorKey: 'name',
+    header: () => h('div', { class: 'text-left' }, 'Name'),
+    cell: ({ row }) => {
+      return h(
+        RouterLink,
+        {
+          to: `/tasks/${row.original.id}`,
+          class: 'text-left font-medium hover:bg-muted block w-full'
+        },
+        () => row.getValue('name')
+      )
+    }
+  },
+  {
+    accessorKey: 'status',
+    header: () => h('div', { class: 'text-left' }, 'Status')
+  },
+  {
+    accessorKey: 'due_date',
+    header: () => h('div', { class: 'text-left' }, 'Due Date')
+  },
+  {
+    accessorKey: 'project_id',
+    header: () => h('div', { class: 'text-left' }, 'Project')
+  },
+  {
+    accessorKey: 'collaborators',
+    header: () => h('div', { class: 'text-left' }, 'Collaborators')
+  }
+]
 </script>
 
 <template>
-  <div>
-    <h1>Tasks Page</h1>
-    <RouterLink to="/">Go to home</RouterLink>
-    <ul>
-      <li v-for="item in tasks" :key="item.id">
-        {{ item.name }}
-        {{ item.slug }}
-      </li>
-    </ul>
-  </div>
+  <DataTable v-if="tasks" :columns="columns" :data="tasks">
+    <template #cell-name="{ cell }">
+      <RouterLink :to="`/tasks/${cell.row.original.id}`">
+        {{ cell.getValue() }}
+      </RouterLink>
+    </template>
+  </DataTable>
 </template>
-
-<style scoped></style>

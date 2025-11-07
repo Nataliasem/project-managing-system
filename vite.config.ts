@@ -1,16 +1,23 @@
 import { fileURLToPath, URL } from 'node:url'
 import VueRouter from 'unplugin-vue-router/vite'
-
+import Tailwindcss from '@tailwindcss/vite'
+import Vue from '@vitejs/plugin-vue'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     VueRouter(),
-    vue(),
-    vueDevTools()
+    Vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (element) => element.startsWith('iconify-icon')
+        }
+      }
+    }),
+    VueDevTools(),
+    Tailwindcss()
   ],
   resolve: {
     alias: {
