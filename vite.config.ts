@@ -5,6 +5,7 @@ import Vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
+import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
@@ -31,6 +32,7 @@ export default defineConfig({
         }
       }
     }),
+    Components(),
     VueDevTools(),
     Tailwindcss()
   ],
