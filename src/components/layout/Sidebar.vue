@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import SidebarLink from './SidebarLink.vue'
-import { Button } from '@/components/ui/button'
-
 const links = [
   {
     title: 'Dashboard',

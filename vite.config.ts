@@ -3,12 +3,28 @@ import VueRouter from 'unplugin-vue-router/vite'
 import Tailwindcss from '@tailwindcss/vite'
 import Vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
+import AutoImport from 'unplugin-auto-import/vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
+import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     VueRouter(),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/,
+        /\.vue$/, /\.vue\?vue/,
+        /\.md$/, //
+      ],
+      imports: [
+        'vue',
+        VueRouterAutoImports
+      ],
+      dts: true,
+      viteOptimizeDeps: true
+    }),
     Vue({
       template: {
         compilerOptions: {
@@ -16,6 +32,7 @@ export default defineConfig({
         }
       }
     }),
+    Components(),
     VueDevTools(),
     Tailwindcss()
   ],
